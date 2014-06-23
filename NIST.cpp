@@ -5,10 +5,36 @@
 void NIST::initialize (HMAC_type algorithm_name)
 {
 	hmac_algorithm = algorithm_name;
+	init_prf_function();
+}
 
-	//TODO - DYNAMIC
-	init_prf = &NIST::init_hmacSha256PRF;
-	prf = &NIST::hmacSha256PRF;
+
+void NIST::init_prf_function(void)
+{
+  switch(hmac_algorithm)
+  {
+    case HMAC_SHA1:
+    	init_prf = &NIST::init_hmacSha1PRF;
+		prf = &NIST::hmacSha1PRF;
+		print_prf_result = &NIST::printSha1;
+    break;
+    case HMAC_SHA256:
+    	init_prf = &NIST::init_hmacSha256PRF;
+		prf = &NIST::hmacSha256PRF;
+		print_prf_result = &NIST::printSha256;
+    break;
+    case HMAC_SHA384:
+    	//not implemented
+		Serial.println("Error! HMAC_SHA384 not implemented");
+    break;
+    case HMAC_SHA512:
+    	//not implemented
+    	Serial.println("Error! HMAC_SHA512 not implemented");
+    break;
+    default:
+    	//no other algorithms available
+    	Serial.println("Error! Choose an algorithm implemented");
+  }
 }
 
 
@@ -42,6 +68,10 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 	uint8_t* hash;
 	(this->*init_prf)(keyDerivationKey, keyDerivationKey_lenght);
 	hash = (this->*prf)(fixedInput, fixedInput_lenght);
+
+	if(DEBUG)
+		(this->*print_prf_result)(hash);
+
 	return hash;
 }
 
