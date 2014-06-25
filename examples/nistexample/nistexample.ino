@@ -56,6 +56,7 @@ void setup()
   //TEST 1
   Serial.println("***** TEST 1 - START ESECUTION: *****");
   uint8_t* hash = nist.KDFCounterMode(keyTest1, 560, fixedInput1, SIZE(keyTest1), SIZE(fixedInput1));
+  printBits(hash, 560);
   Serial.println("****************************");
   Serial.println("EXPECTED:");
   Serial.println("0ed1f3374d5bd9fa131af8ec168faae23c4d9e3c5e5788439ced314e8a7e46c4c5eee9ed2c7bb484bd86f99cb97906fd2efd5ffbdcaf0d8dce92f4bbd3f0fd0a79713285557d");
@@ -63,6 +64,7 @@ void setup()
   //TEST 2
   Serial.println("***** TEST 2 - START ESECUTION: *****");
   uint8_t* hash2 = nist.KDFCounterMode(keyTest2, 512, fixedInput2, SIZE(keyTest2), SIZE(fixedInput2));
+  printBits(hash2, 512);
   Serial.println("****************************");
   Serial.println("EXPECTED:");
   Serial.println("08751581291d5a4109cb10244b7a42363f0e175bce0fcd1207ec8a5ca829d80022521e8d0fa8231ce975039062e1744cc52cad7fbdc126740c905bbc0bc4a764");
@@ -73,3 +75,16 @@ void loop()
 {
 }
 
+//utility
+void printBits(uint8_t* hash, int bitsNumber)
+{
+  int i;
+  int limit = bitsNumber/8;
+
+  for (i=0; i<limit; i++)
+  {
+    Serial.print("0123456789abcdef"[hash[i]>>4]);
+    Serial.print("0123456789abcdef"[hash[i]&0xf]);
+  }
+  Serial.println();
+}
