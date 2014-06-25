@@ -1,0 +1,10 @@
+#######################################
+# Syntax Coloring Map For Nist Impl
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+initialize	KEYWORD2
+KDFCounterMode	KEYWORD2

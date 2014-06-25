@@ -5,7 +5,7 @@
 #include "inttypes.h"
 #include "HMAC_type.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 class NIST
 {

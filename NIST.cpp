@@ -71,9 +71,7 @@ uint8_t* NIST::hmacSha256PRF(uint8_t data[], int data_length)
 * Input:
 *  - keyDerivationKey: is the secret key used to derive the new key = KI
 *  - outputSizeBit: is an int that represents the number of bits for the new generated key = L
-*  - fixedInput: is used as fixed part of "data/message" for the hmac-shaX 
-*                function (NB: the dynamic part is given by the counter). In our implementation,
-*                it is composed by: a || 0x00 || userID || init_time || exp_time || [outputSizeBits]2 (=>binary representation of outputSizeBits)
+*  - fixedInput: is used as fixed part of "data/message" for the hmac-shaX function.
 *  - keyDerivationKey_lenght: keyDerivationKey's number bytes
 *  - fixedInput_lenght: fixedInput's number bytes
 * Output:
@@ -95,8 +93,10 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 	keyDerivated = new uint8_t[outputSizeBit/8];
 	
 	do{
-		if(DEBUG)
-			Serial.print("Iteration number "); Serial.println(ctr);
+		if(DEBUG){
+			Serial.print("Iteration number ");
+			Serial.println(ctr);
+		}
 
 		//update data using "ctr"
 		dataInput = updateDataInput(ctr, fixedInput, fixedInput_length);
