@@ -1,7 +1,6 @@
 #include <NIST.h>
 #include "sha256.h"
 #include "sha1.h"
-#include <MemoryFree.h>
 #include <Time.h>
 
 //used to count how many elements there are inside an array

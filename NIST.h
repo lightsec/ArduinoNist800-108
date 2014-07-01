@@ -32,8 +32,6 @@ class NIST
 		//utilities
 		uint8_t* updateDataInput (uint8_t ctr, uint8_t* fixedInput, int fixedInput_length);
 		void printBits (uint8_t* hash, int bitsNumber);
-		void printCurrentAmountOfMemory (String str);
-		void printCurrentTimeFromStarting (String str);
 
 	public:
 		void initialize (HMAC_type algorithm_name);

@@ -59,7 +59,7 @@ void setup()
   printBits(hash1, 128);
   Serial.print("[HMAC-SHA1] [EXPECTED] ");
   Serial.println("7596a2c6e19c8f5f52e1e7c6380fa5e5");
-
+  free(hash1);
   
   //new initialization for hmac-sha256
   nist.initialize(HMAC_SHA256);
@@ -70,6 +70,7 @@ void setup()
   printBits(hash2, 512);
   Serial.print("[HMAC-SHA256] [EXPECTED] ");
   Serial.println("08751581291d5a4109cb10244b7a42363f0e175bce0fcd1207ec8a5ca829d80022521e8d0fa8231ce975039062e1744cc52cad7fbdc126740c905bbc0bc4a764");
+  free(hash2);
   
 }
 

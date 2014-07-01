@@ -8,7 +8,12 @@ Arduino Library that implements Nist SP 800-108 KDF in Counter Mode
 To use this libray, two operations have to be done:
 * Download this repository in your [Arduino Libraries Directory](http://arduino.cc/en/Guide/Libraries) e.g. `<arduino installation directory>\libraries`.
 * Download the [Cryptosuite Library](https://github.com/dventura3/Cryptosuite) in the Arduino Library Directory. (NB: The Cryptosuite Library was modified respect original version).
-* Download the [Memory Free Library](http://playground.arduino.cc/Code/AvailableMemory) in the Arduino Library Directory (NB: the use of this library is work in progress...).
+
+Inside the file Nist.h there are 3 constants:
+* #define DEBUG 0 => to print in the serial monitor verbose information;
+* #define MEMORY_TEST 0 => to know how much free memory is available at starting and ending execution of NIST-KDF function;
+* #define TIMING_TEST 0 => to know how much time was spent to execute NIST-KDF function.
+To enable this information, it's necessary to set to "1" one o more of these constants.
 
 ##How Testing The Library?
 
