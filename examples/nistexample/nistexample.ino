@@ -1,6 +1,7 @@
 #include <NIST.h>
 #include "sha256.h"
 #include "sha1.h"
+#include <MemoryFree.h>
 
 //used to count how many elements there are inside an array
 #define SIZE(x)  (sizeof(x) / sizeof(x[0]))
@@ -8,25 +9,24 @@
 
 NIST nist;
 
-// TEST 1
+//TEST 1 - HMAC_SHA1
 
-uint8_t keyTest1[] =  {
-  (byte)0xd2,(byte)0xf2,(byte)0x12,(byte)0xcf,(byte)0x90,(byte)0x65,(byte)0x9f,(byte)0x20,(byte)0x69,(byte)0xa4,
-  (byte)0x3e,(byte)0x9f,(byte)0x7f,(byte)0x7b,(byte)0x10,(byte)0x21,(byte)0x72,(byte)0x47,(byte)0x04,(byte)0x06,
-  (byte)0x65,(byte)0x8d,(byte)0x83,(byte)0x24,(byte)0xb9,(byte)0xed,(byte)0xff,(byte)0x6a,(byte)0xc7,(byte)0xa7,
-  (byte)0xfe,(byte)0x52
+uint8_t keyTest1[] = {
+  (byte)0x87,(byte)0x23,(byte)0xb7,(byte)0x23,(byte)0xaa,(byte)0x39,(byte)0x8f,(byte)0x94,(byte)0xaf,(byte)0x2b,
+  (byte)0x61,(byte)0xc0,(byte)0x6c,(byte)0xd9,(byte)0x9d,(byte)0xe0,(byte)0x1e,(byte)0xf6,(byte)0x49,(byte)0x7b
 };
 
-uint8_t fixedInput1[] =  {
-  (byte)0xd2,(byte)0xd6,(byte)0x94,(byte)0xe8,(byte)0xf4,(byte)0xfb,(byte)0x4a,(byte)0xde,(byte)0x0e,(byte)0x70,
-  (byte)0xd8,(byte)0x82,(byte)0x22,(byte)0x74,(byte)0x2c,(byte)0xff,(byte)0x97,(byte)0x5b,(byte)0xaf,(byte)0x66,
-  (byte)0x22,(byte)0xdb,(byte)0x87,(byte)0x45,(byte)0xfc,(byte)0xd4,(byte)0x73,(byte)0x79,(byte)0x32,(byte)0x58,
-  (byte)0xa9,(byte)0x7e,(byte)0x96,(byte)0x5f,(byte)0xea,(byte)0xdd,(byte)0x54,(byte)0x91,(byte)0xe4,(byte)0x66,
-  (byte)0x1f,(byte)0xf1,(byte)0x8a,(byte)0xa4,(byte)0xf3,(byte)0x98,(byte)0x91,(byte)0x4e,(byte)0x9f,(byte)0x0f,
-  (byte)0xfa,(byte)0xf9,(byte)0x07,(byte)0x38,(byte)0xf0,(byte)0x4b,(byte)0x15,(byte)0x8b,(byte)0xfe,(byte)0x9c
+uint8_t fixedInput1[] = {
+  (byte)0x8a,(byte)0xec,(byte)0xe2,(byte)0x31,(byte)0xd6,(byte)0x9a,(byte)0xb0,(byte)0x33,(byte)0xc9,(byte)0xef,
+  (byte)0xe8,(byte)0x24,(byte)0xc3,(byte)0x98,(byte)0xda,(byte)0x94,(byte)0x77,(byte)0x7b,(byte)0x26,(byte)0x08,
+  (byte)0x87,(byte)0xc6,(byte)0x09,(byte)0xa3,(byte)0x4c,(byte)0x02,(byte)0x06,(byte)0xe4,(byte)0xab,(byte)0xcc,
+  (byte)0xe0,(byte)0xf5,(byte)0x70,(byte)0x93,(byte)0x56,(byte)0xa7,(byte)0xdb,(byte)0xb9,(byte)0x2b,(byte)0x8b,
+  (byte)0x0d,(byte)0x38,(byte)0x7c,(byte)0xcb,(byte)0x49,(byte)0x45,(byte)0xd3,(byte)0xb8,(byte)0xa5,(byte)0x49,
+  (byte)0x09,(byte)0x72,(byte)0x20,(byte)0x5e,(byte)0x72,(byte)0x53,(byte)0x1f,(byte)0x96,(byte)0x1b,(byte)0x3d
 };
 
-//TEST 2
+
+//TEST 2 - HMAC_SHA256
 
 uint8_t keyTest2[] =  {
   (byte)0xa4,(byte)0x86,(byte)0xb3,(byte)0xeb,(byte)0x05,(byte)0x35,(byte)0x70,(byte)0xb3,(byte)0xb9,(byte)0x9e,
@@ -49,24 +49,26 @@ void setup()
 {
   
   Serial.begin(9600);
+
+  //initialization for hmac-sha1
+  nist.initialize(HMAC_SHA1);
   
-  //hmac-sha256
+  //TEST 1 - HMAC_SHA1
+  uint8_t* hash1 = nist.KDFCounterMode(keyTest1, 128, fixedInput1, SIZE(keyTest1), SIZE(fixedInput1));
+  Serial.print("[HMAC-SHA1] [RESULTED] ");
+  printBits(hash1, 128);
+  Serial.print("[HMAC-SHA1] [EXPECTED] ");
+  Serial.println("7596a2c6e19c8f5f52e1e7c6380fa5e5");
+
+  
+  //new initialization for hmac-sha256
   nist.initialize(HMAC_SHA256);
   
-  //TEST 1
-  Serial.println("***** TEST 1 - START ESECUTION: *****");
-  uint8_t* hash = nist.KDFCounterMode(keyTest1, 560, fixedInput1, SIZE(keyTest1), SIZE(fixedInput1));
-  printBits(hash, 560);
-  Serial.println("****************************");
-  Serial.println("EXPECTED:");
-  Serial.println("0ed1f3374d5bd9fa131af8ec168faae23c4d9e3c5e5788439ced314e8a7e46c4c5eee9ed2c7bb484bd86f99cb97906fd2efd5ffbdcaf0d8dce92f4bbd3f0fd0a79713285557d");
-  
-  //TEST 2
-  Serial.println("***** TEST 2 - START ESECUTION: *****");
+  //TEST 2 - HMAC_SHA256
   uint8_t* hash2 = nist.KDFCounterMode(keyTest2, 512, fixedInput2, SIZE(keyTest2), SIZE(fixedInput2));
+  Serial.print("[HMAC-SHA256] [RESULTED] ");
   printBits(hash2, 512);
-  Serial.println("****************************");
-  Serial.println("EXPECTED:");
+  Serial.print("[HMAC-SHA256] [EXPECTED] ");
   Serial.println("08751581291d5a4109cb10244b7a42363f0e175bce0fcd1207ec8a5ca829d80022521e8d0fa8231ce975039062e1744cc52cad7fbdc126740c905bbc0bc4a764");
   
 }
@@ -75,7 +77,7 @@ void loop()
 {
 }
 
-//utility
+//UTILITY FUNCTION
 void printBits(uint8_t* hash, int bitsNumber)
 {
   int i;

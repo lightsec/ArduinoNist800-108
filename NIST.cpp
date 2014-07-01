@@ -1,6 +1,7 @@
 #include "NIST.h"
 #include "sha256.h"
 #include "sha1.h"
+#include <MemoryFree.h>
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
@@ -79,6 +80,13 @@ uint8_t* NIST::hmacSha256PRF(uint8_t data[], int data_length)
 */
 uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint8_t* fixedInput, int keyDerivationKey_length, int fixedInput_length)
 {
+
+	if(MEMORY_TEST)
+		printCurrentAmountOfMemory("Free Memory Inside KDF function & BEFORE to invoke it: ");
+
+	if(TIMING_TEST)
+		printCurrentTimeFromStarting("Timing BEFORE to invoke KDF: ");
+
 	uint8_t ctr;
 	uint8_t* KI;
 	uint8_t* keyDerivated;
@@ -126,26 +134,37 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 
 		//increment ctr and numCurrentElements copied in keyDerivated
 		numCurrentElements = numCurrentElements + len;
-
 		ctr++;
+
+		//deallock space in memory
+		free(dataInput);
 
 	} while (numCurrentElements < outputSizeBit);
 
 	if(DEBUG)
 		printBits(keyDerivated, outputSizeBit);
 
+	if(MEMORY_TEST)
+		printCurrentAmountOfMemory("Free Memory Inside KDF function & AFTER to have invoked it: ");
+
+	if(TIMING_TEST)
+		printCurrentTimeFromStarting("Timing AFTER to have invoked KDF: ");
+
 	return keyDerivated;
 }
 
 
+/*
+* Function used to shift data of 1 byte. This byte is the "ctr".
+*/
 uint8_t* NIST::updateDataInput (uint8_t ctr, uint8_t* fixedInput, int fixedInput_length)
 {
+
 	uint8_t* tmpFixedInput = new uint8_t[fixedInput_length + 1]; //+1 is caused from the ctr
 	tmpFixedInput[0] = ctr;
 	memcpy(tmpFixedInput + 1, fixedInput, fixedInput_length * sizeof(uint8_t));
 	return tmpFixedInput;
 }
-
 
 
 /**
@@ -162,4 +181,26 @@ void NIST::printBits(uint8_t* hash, int bitsNumber)
     Serial.print("0123456789abcdef"[hash[i]&0xf]);
   }
   Serial.println();
+}
+
+
+/**
+* DEBUG function to print free memory. Free memori determines the amount of memory currently available.
+*/
+void NIST::printCurrentAmountOfMemory(String str)
+{
+	Serial.print(str);
+	Serial.println(freeMemory());
+}
+
+
+/**
+* DEBUG function to print millisecs. The "mills" function returns the number of milliseconds
+* since the Arduino board began running the current program. 
+*/
+void NIST::printCurrentTimeFromStarting(String str)
+{
+	Serial.print(str);
+	//millis returns an unsigned long.
+	Serial.println(millis());
 }

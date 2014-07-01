@@ -6,6 +6,8 @@
 #include "HMAC_type.h"
 
 #define DEBUG 0
+#define MEMORY_TEST 0
+#define TIMING_TEST 0
 
 class NIST
 {
@@ -17,7 +19,7 @@ class NIST
     	uint8_t* (NIST::*prf) (uint8_t data[], int data_length);
 
     	//init PRF function
-    	void init_prf_function(void);
+    	void init_prf_function (void);
 
     	//sha-1 functions
     	void init_hmacSha1PRF (uint8_t key[], int key_length);
@@ -25,15 +27,17 @@ class NIST
 
     	//sha-256 functions
    		void init_hmacSha256PRF (uint8_t key[], int key_length);
-    	uint8_t* hmacSha256PRF(uint8_t data[], int data_length);
+    	uint8_t* hmacSha256PRF (uint8_t data[], int data_length);
 
 		//utilities
 		uint8_t* updateDataInput (uint8_t ctr, uint8_t* fixedInput, int fixedInput_length);
-		void printBits(uint8_t* hash, int bitsNumber);
+		void printBits (uint8_t* hash, int bitsNumber);
+		void printCurrentAmountOfMemory (String str);
+		void printCurrentTimeFromStarting (String str);
 
 	public:
 		void initialize (HMAC_type algorithm_name);
-		uint8_t* KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint8_t* fixedInput, int keyDerivationKey_length, int fixedInput_length);
+		uint8_t* KDFCounterMode (uint8_t* keyDerivationKey, int outputSizeBit, uint8_t* fixedInput, int keyDerivationKey_length, int fixedInput_length);
 };
 
 #endif
