@@ -3,8 +3,6 @@
 #include "sha1.h"
 #include <Time.h>
 
-//used to count how many elements there are inside an array
-#define SIZE(x)  (sizeof(x) / sizeof(x[0]))
 
 //used to convert long in uint8_t*
 union longBytes {
@@ -24,14 +22,22 @@ struct MS {
 NIST nist;
 
 
+/**
+* In each simulation, new random MS keys (MSauth and MSencr) are generated.
+* This file is compose by 3 simulations:
+* - HMAC_SHA1 and MSauth and MSencr long 128 bits
+* - HMAC_SHA256 and MSauth and MSencr long 256 bits
+* - HMAC_SHA256 and MSauth and MSencr long 512 bits
+* All fixed data are generated using random functions.
+* At the end of each simulation, the memory is cleaned. 
+* In this way, each simulation start in the same memory condition.
+*/
 void setup()
 {
   Serial.begin(9600);
 
   simulateKDF(128, HMAC_SHA1);
-   
   simulateKDF(256, HMAC_SHA256);
-   
   simulateKDF(512, HMAC_SHA256);
 }
 
@@ -47,7 +53,7 @@ void simulateKDF(size_t numBitsOutputKey, HMAC_type algorithmType)
   //generate random secrets keys
   generateMSkeys(numBitsOutputKey);
   //execute simulation
-  generateSimulation(numBitsOutputKey);
+  executeSimulation(numBitsOutputKey);
 }
 
 
@@ -61,7 +67,7 @@ void generateMSkeys(size_t numBitsLength)
   //printBits(secretKeys.MSauth, secretKeys.MSauthBits);
 }
 
-void generateSimulation(size_t numBitsOutputKey)
+void executeSimulation(size_t numBitsOutputKey)
 {
   time_t init_time = now();
   time_t exp_time = (second(init_time) + 3600000);
@@ -71,6 +77,9 @@ void generateSimulation(size_t numBitsOutputKey)
 
   printBits(Kencr, numBitsOutputKey);
   printBits(Kauth, numBitsOutputKey);
+
+  //free memory used for simulation (necessary to clean memory for next simulations)
+  freeMemory(Kencr, Kauth);
 }
 
 
@@ -89,8 +98,21 @@ uint8_t* generateKDFkey(uint8_t* key, size_t keyLength, int a, int userID, time_
   fixedInput[sizeof(exp_time)] = outputSizeBit;
   
   resultKDF = nist.KDFCounterMode(key, outputSizeBit, fixedInput, keyLength, fixedInputLength);
+
+  //dealloc fixedInput to clean the memory
+  free(fixedInput);
   
   return resultKDF;
+}
+
+
+void freeMemory(uint8_t* Kencr, uint8_t* Kauth)
+{
+  //dealloc all data for the next simulation
+  free(Kencr);
+  free(Kauth);
+  free(secretKeys.MSencr);
+  free(secretKeys.MSauth);
 }
 
 
