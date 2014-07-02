@@ -1,10 +1,15 @@
 #include "MemoryAnalyzer.h"
+#include "MemoryFree.h"
 
 
 int MemoryAnalyzer::freeRam () {
   extern int __heap_start, *__brkval; 
   int v; 
   return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
+}
+
+int MemoryAnalyzer::freeRam_method2 () {
+	return freeMemory();
 }
 
 /**
@@ -32,7 +37,7 @@ String MemoryAnalyzer::getCurrentFreeRam(String when, HMAC_type algorithm, size_
 	    break;
 	}
 	buf += "[" + String(numBitOutputKDF) + "]";
-	buf += "[" + String(MemoryAnalyzer::freeRam()) + "]";
+	buf += "[" + String(MemoryAnalyzer::freeRam_method2()) + "]";
 
 	Serial.println(buf);
 

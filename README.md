@@ -16,6 +16,8 @@ Inside the file Nist.h there are 3 constants:
 
 For enabling this information, it's necessary to set to "1" the value of one o more of these constants.
 
+If you want to exec a monitoring of free memory available, It's also necessary download the [Memory Free Arduino Library](http://playground.arduino.cc/Code/AvailableMemory) in the Arduino Library Directory.
+
 ##How Testing The Library?
 
 To test the libray, it was used [ArduinoUnit Library](https://github.com/mmurdoch/arduinounit).

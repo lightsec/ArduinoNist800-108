@@ -10,7 +10,6 @@
 #include "utility/TimingAnalyzer.h"
 #endif
 
-
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 
@@ -89,7 +88,6 @@ uint8_t* NIST::hmacSha256PRF(uint8_t data[], int data_length)
 uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint8_t* fixedInput, int keyDerivationKey_length, int fixedInput_length)
 {
 
-
 #if MEMORY_TEST
 		MemoryAnalyzer::getCurrentFreeRam("START", hmac_algorithm, outputSizeBit);
 #endif
@@ -165,7 +163,6 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 #if TIMING_TEST
 		TimingAnalyzer::getCurrentTime("END", hmac_algorithm, outputSizeBit);
 #endif
-
 
 	return keyDerivated;
 }
