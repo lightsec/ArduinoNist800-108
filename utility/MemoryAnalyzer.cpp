@@ -1,5 +1,5 @@
 #include "MemoryAnalyzer.h"
-#include "MemoryFree.h"
+#include <MemoryRamFree.h>
 
 
 int MemoryAnalyzer::freeRam () {
@@ -9,7 +9,7 @@ int MemoryAnalyzer::freeRam () {
 }
 
 int MemoryAnalyzer::freeRam_method2 () {
-	return freeMemory();
+	return myFreeMemory();
 }
 
 /**

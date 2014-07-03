@@ -1,7 +1,6 @@
 #include <NIST.h>
 #include "sha256.h"
 #include "sha1.h"
-#include <MemoryFree.h>
 
 //used to count how many elements there are inside an array
 #define SIZE(x)  (sizeof(x) / sizeof(x[0]))
