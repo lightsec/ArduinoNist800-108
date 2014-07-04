@@ -7,7 +7,9 @@
 class TimingAnalyzer
 {
 	public:
-		static String getCurrentTime (String when, HMAC_type algorithm, size_t numBitOutputKDF);
+		static String getSTRCurrentTime(String when, HMAC_type algorithm, size_t numBitOutputKDF, long mil);
+		static String getJSONcurrentTime(String when, HMAC_type algorithm, size_t numBitOutputKDF, long mil);
+		static long getCurrentTime();
 };
 
 #endif

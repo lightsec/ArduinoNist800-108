@@ -8,10 +8,11 @@ class MemoryAnalyzer
 {
 	private:
 		static int freeRam();
-		static int freeRam_method2();
 
 	public:
-		static String getCurrentFreeRam (String when, HMAC_type algorithm, size_t numBitOutputKDF);
+		static String getSTRCurrentFreeRam (String when, HMAC_type algorithm, size_t numBitOutputKDF, int freeRam);
+		static String getJSONcurrentFreeRam(String when, HMAC_type algorithm, size_t numBitOutputKDF, int freeRam);
+		static int freeRam_method2();
 };
 
 #endif

@@ -26,4 +26,4 @@ After that, it is possible to execute the test branch contained inside `<arduino
 
 In the directory ''examples'' of this repository, there are two examples.
 
-To execute the ''nistsimulation'' is necessary to download the [Arduino Time Library](http://playground.arduino.cc/Code/Time).
+To execute the ''nistsimulation'' or ''nistchaching'' is necessary to download the [Arduino Time Library](http://playground.arduino.cc/Code/Time).

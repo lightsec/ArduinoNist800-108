@@ -1,0 +1,12 @@
+{ "typeOfAnalysis" : "timing",  "when" : "START",  "algorithm" : "HMAC_SHA1",  "numBitOutputKDF" : "128",  "value" : "1" }
+{ "typeOfAnalysis" : "timing",  "when" : "END",  "algorithm" : "HMAC_SHA1",  "numBitOutputKDF" : "128",  "value" : "92" }
+{ "typeOfAnalysis" : "timing",  "when" : "START",  "algorithm" : "HMAC_SHA1",  "numBitOutputKDF" : "128",  "value" : "191" }
+{ "typeOfAnalysis" : "timing",  "when" : "END",  "algorithm" : "HMAC_SHA1",  "numBitOutputKDF" : "128",  "value" : "350" }
+{ "typeOfAnalysis" : "timing",  "when" : "START",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "256",  "value" : "452" }
+{ "typeOfAnalysis" : "timing",  "when" : "END",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "256",  "value" : "684" }
+{ "typeOfAnalysis" : "timing",  "when" : "START",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "256",  "value" : "748" }
+{ "typeOfAnalysis" : "timing",  "when" : "END",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "256",  "value" : "982" }
+{ "typeOfAnalysis" : "timing",  "when" : "START",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "512",  "value" : "1049" }
+{ "typeOfAnalysis" : "timing",  "when" : "END",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "512",  "value" : "1468" }
+{ "typeOfAnalysis" : "timing",  "when" : "START",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "512",  "value" : "1533" }
+{ "typeOfAnalysis" : "timing",  "when" : "END",  "algorithm" : "HMAC_SHA256",  "numBitOutputKDF" : "512",  "value" : "1955" }
