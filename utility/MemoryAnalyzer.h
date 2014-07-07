@@ -10,8 +10,9 @@ class MemoryAnalyzer
 		static int freeRam();
 
 	public:
-		static String getSTRCurrentFreeRam (String when, HMAC_type algorithm, size_t numBitOutputKDF, int freeRam);
+		static String getSTRcurrentFreeRam (String when, HMAC_type algorithm, size_t numBitOutputKDF, int freeRam);
 		static String getJSONcurrentFreeRam(String when, HMAC_type algorithm, size_t numBitOutputKDF, int freeRam);
+		static String getBinarycurrentFreeRam(bool when, HMAC_type algorithm, size_t numBitOutputKDF, int freeRam);
 		static int freeRam_method2();
 };
 

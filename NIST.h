@@ -7,7 +7,7 @@
 
 #define DEBUG 0
 #define MEMORY_TEST 0
-#define TIMING_TEST 0
+#define TIMING_TEST 1
 
 class NIST
 {

@@ -15,7 +15,7 @@ long TimingAnalyzer::getCurrentTime(){
 * - VALUE_MILLISEC => current millisec. The "mills" function returns the number of milliseconds
 * 					  since the Arduino board began running the current program. 
 */
-String TimingAnalyzer::getSTRCurrentTime(String when, HMAC_type algorithm, size_t numBitOutputKDF, long mil) {
+String TimingAnalyzer::getSTRcurrentTime(String when, HMAC_type algorithm, size_t numBitOutputKDF, long mil) {
 
 	String buf;
 	buf += "[TIMING]";
@@ -68,6 +68,33 @@ String TimingAnalyzer::getJSONcurrentTime(String when, HMAC_type algorithm, size
 	buf += " \"numBitOutputKDF\" : \"" + String(numBitOutputKDF) + "\", ";
 	buf += " \"value\" : \"" + String(mil) + "\" }";
 	
+	Serial.println(buf);
+
+	return buf;
+
+}
+
+
+/**
+* 1) 1 = Memory / 0 = Timing
+* 2) 1 = Start / 0 = End
+* 3) 1 = HMAC_SHA1 / 0 = HMAC_SHA256
+* 4) numBitOutputKDF
+* 5) millisecs
+*/
+String TimingAnalyzer::getBinarycurrentTime(bool when, HMAC_type algorithm, size_t numBitOutputKDF, long mil) {
+
+	String buf;
+	buf += "0";
+	buf += ",";
+	buf += String(when);
+	buf += ",";
+	buf += String(algorithm);
+	buf += ",";
+	buf += String(numBitOutputKDF);
+	buf += ",";
+	buf += String(mil);
+
 	Serial.println(buf);
 
 	return buf;

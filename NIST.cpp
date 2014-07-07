@@ -90,12 +90,12 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 
 #if MEMORY_TEST
 		int fm_start = MemoryAnalyzer::freeRam_method2();
-		MemoryAnalyzer::getJSONcurrentFreeRam("START", hmac_algorithm, outputSizeBit, fm_start);
+		MemoryAnalyzer::getBinarycurrentFreeRam(1, hmac_algorithm, outputSizeBit, fm_start);
 #endif
 
 #if TIMING_TEST
 		long mil_start = TimingAnalyzer::getCurrentTime(); 
-		TimingAnalyzer::getJSONcurrentTime("START", hmac_algorithm, outputSizeBit, mil_start);
+		TimingAnalyzer::getBinarycurrentTime(1, hmac_algorithm, outputSizeBit, mil_start);
 #endif
 
 
@@ -160,12 +160,12 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 
 #if MEMORY_TEST
 		int fm_end = MemoryAnalyzer::freeRam_method2();
-		MemoryAnalyzer::getJSONcurrentFreeRam("END", hmac_algorithm, outputSizeBit, fm_end);
+		MemoryAnalyzer::getBinarycurrentFreeRam(0, hmac_algorithm, outputSizeBit, fm_end);
 #endif
 
 #if TIMING_TEST
 		long mil_end = TimingAnalyzer::getCurrentTime();
-		TimingAnalyzer::getJSONcurrentTime("END", hmac_algorithm, outputSizeBit, mil_end);
+		TimingAnalyzer::getBinarycurrentTime(0, hmac_algorithm, outputSizeBit, mil_end);
 #endif
 
 	return keyDerivated;
