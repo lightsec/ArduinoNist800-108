@@ -1,7 +1,14 @@
 #include "TimingAnalyzer.h"
 
+//4 bytes for each long
+long* TimingAnalyzer::bufTime = new long[TIME_BUF_SIZE];
+
 long TimingAnalyzer::getCurrentTime(){
 	return millis();
+}
+
+void TimingAnalyzer::storeTime(int position){
+	TimingAnalyzer::bufTime[position] = millis();
 }
 
 /**
@@ -98,5 +105,34 @@ String TimingAnalyzer::getBinarycurrentTime(bool when, HMAC_type algorithm, size
 	Serial.println(buf);
 
 	return buf;
+
+}
+
+void TimingAnalyzer::printBinarycurrentTime(HMAC_type algorithm, size_t numBitOutputKDF){
+
+	String buf;
+	buf = "0";
+	buf += ",";
+	buf += "1";
+	buf += ",";
+	buf += String(algorithm);
+	buf += ",";
+	buf += String(numBitOutputKDF);
+	buf += ",";
+	buf += String(TimingAnalyzer::bufTime[1]);
+
+	Serial.println(buf);
+
+	buf = "0";
+	buf += ",";
+	buf += "0";
+	buf += ",";
+	buf += String(algorithm);
+	buf += ",";
+	buf += String(numBitOutputKDF);
+	buf += ",";
+	buf += String(TimingAnalyzer::bufTime[0]);
+
+	Serial.println(buf);
 
 }

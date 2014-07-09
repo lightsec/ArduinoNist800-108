@@ -1,0 +1,42 @@
+Caching - Arduino UNO:
+
+>>> CASE 1:
+Saved the two KDFs keys + other information:
+struct userData ud;
+ud.Kencr_sa = Kencr;
+ud.Kauth_sa = Kauth;
+ud.exp_time = exp_time;
+ud.ctr = random();
+ud.ID_A = random();
+
+1) hmac_sha1 + 128 bits:
+Number of users: 13
+
+
+2) hmac_sha256 + 265 bits:
+Number of users: 9
+
+
+3) hmac_sha256 + 512 bits:
+Number of users: 5
+
+
+>>> CASE 2:
+Save only informatios used to generate KDF keys for each user request:
+struct userData ud;
+ud.a = a;
+ud.init_time = init_time;
+ud.exp_time = exp_time;
+ud.ctr = random();
+ud.ID_A = id_a;
+
+1) hmac_sha1 + 128 bits:
+Number of users: 25
+
+
+2) hmac_sha256 + 265 bits:
+Number of users: 23
+
+
+3) hmac_sha256 + 512 bits:
+Number of users: 20

@@ -89,13 +89,15 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 {
 
 #if MEMORY_TEST
-		int fm_start = MemoryAnalyzer::freeRam_method2();
-		MemoryAnalyzer::getBinarycurrentFreeRam(1, hmac_algorithm, outputSizeBit, fm_start);
+		//int fm_start = MemoryAnalyzer::freeRam_method2();
+		//MemoryAnalyzer::getBinarycurrentFreeRam(1, hmac_algorithm, outputSizeBit, fm_start);
+		MemoryAnalyzer::storeFreeRam(1);
 #endif
 
 #if TIMING_TEST
-		long mil_start = TimingAnalyzer::getCurrentTime(); 
-		TimingAnalyzer::getBinarycurrentTime(1, hmac_algorithm, outputSizeBit, mil_start);
+		//mil_start = TimingAnalyzer::getCurrentTime(); 
+		//TimingAnalyzer::getBinarycurrentTime(1, hmac_algorithm, outputSizeBit, mil_start);
+		TimingAnalyzer::storeTime(1);
 #endif
 
 
@@ -159,13 +161,17 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 #endif
 
 #if MEMORY_TEST
-		int fm_end = MemoryAnalyzer::freeRam_method2();
-		MemoryAnalyzer::getBinarycurrentFreeRam(0, hmac_algorithm, outputSizeBit, fm_end);
+		//int fm_end = MemoryAnalyzer::freeRam_method2();
+		//MemoryAnalyzer::getBinarycurrentFreeRam(0, hmac_algorithm, outputSizeBit, fm_end);
+		MemoryAnalyzer::storeFreeRam(0);
+		MemoryAnalyzer::printBinarycurrentFreeRam(hmac_algorithm, outputSizeBit);
 #endif
 
 #if TIMING_TEST
-		long mil_end = TimingAnalyzer::getCurrentTime();
-		TimingAnalyzer::getBinarycurrentTime(0, hmac_algorithm, outputSizeBit, mil_end);
+		//long mil_end = TimingAnalyzer::getCurrentTime();
+		//TimingAnalyzer::getBinarycurrentTime(0, hmac_algorithm, outputSizeBit, mil_end);
+		TimingAnalyzer::storeTime(0);
+		TimingAnalyzer::printBinarycurrentTime(hmac_algorithm, outputSizeBit);
 #endif
 
 	return keyDerivated;
@@ -177,7 +183,6 @@ uint8_t* NIST::KDFCounterMode(uint8_t* keyDerivationKey, int outputSizeBit, uint
 */
 uint8_t* NIST::updateDataInput (uint8_t ctr, uint8_t* fixedInput, int fixedInput_length)
 {
-
 	uint8_t* tmpFixedInput = new uint8_t[fixedInput_length + 1]; //+1 is caused from the ctr
 	tmpFixedInput[0] = ctr;
 	memcpy(tmpFixedInput + 1, fixedInput, fixedInput_length * sizeof(uint8_t));

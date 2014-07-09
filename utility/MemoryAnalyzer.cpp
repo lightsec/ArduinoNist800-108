@@ -1,6 +1,8 @@
 #include "MemoryAnalyzer.h"
 #include <MemoryRamFree.h>
 
+//4 bytes for each long
+int* MemoryAnalyzer::bufMemory = new int[MEM_BUF_SIZE];
 
 int MemoryAnalyzer::freeRam () {
   extern int __heap_start, *__brkval; 
@@ -10,6 +12,10 @@ int MemoryAnalyzer::freeRam () {
 
 int MemoryAnalyzer::freeRam_method2 () {
 	return myFreeMemory();
+}
+
+void MemoryAnalyzer::storeFreeRam(int position){
+	MemoryAnalyzer::bufMemory[position] = myFreeMemory();
 }
 
 /**
@@ -102,5 +108,36 @@ String MemoryAnalyzer::getBinarycurrentFreeRam(bool when, HMAC_type algorithm, s
 	Serial.println(buf);
 
 	return buf;
+
+}
+
+
+
+void MemoryAnalyzer::printBinarycurrentFreeRam(HMAC_type algorithm, size_t numBitOutputKDF){
+
+	String buf;
+	buf = "1";
+	buf += ",";
+	buf += "1";
+	buf += ",";
+	buf += String(algorithm);
+	buf += ",";
+	buf += String(numBitOutputKDF);
+	buf += ",";
+	buf += String(MemoryAnalyzer::bufMemory[1]);
+
+	Serial.println(buf);
+
+	buf = "1";
+	buf += ",";
+	buf += "0";
+	buf += ",";
+	buf += String(algorithm);
+	buf += ",";
+	buf += String(numBitOutputKDF);
+	buf += ",";
+	buf += String(MemoryAnalyzer::bufMemory[0]);
+
+	Serial.println(buf);
 
 }
