@@ -1,4 +1,4 @@
-Nist
+ArduinoNist800-108
 ====
 
 This project contains an Arduino Library that implements Nist SP 800-108 KDF in Counter Mode.
@@ -20,12 +20,12 @@ To enable this information, it's necessary to set to "1" the value of one o more
 
 ##Testing
 
-For the unit testing, this project uses the [ArduinoUnit Library](https://github.com/mmurdoch/arduinounit).
+For the unit test, this project uses the [ArduinoUnit Library](https://github.com/mmurdoch/arduinounit).
 So, first of all, it is necessary to download the library inside Arduino Library Directory.
 After that, it is possible to execute the test branch contained inside `<arduino installation directory>\libraries\nist\tests` directory.
 
 ##Examples
 
-The ''examples'' directory contains two examples: ''nistsimulation'' or ''nistchaching''.
+The ''examples'' directory contains three examples: 'nistexample', ''nistsimulation'' or ''nistchaching''.
 
 To execute any of them is necessary to download the [Arduino Time Library](http://playground.arduino.cc/Code/Time).
