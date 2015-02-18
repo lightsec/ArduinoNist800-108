@@ -26,6 +26,6 @@ After that, it is possible to execute the test branch contained inside `<arduino
 
 ##Examples
 
-The ''examples'' directory contains three examples: 'nistexample', ''nistsimulation'' or ''nistchaching''.
+The ''examples'' directory contains three examples: ''nistexample'', ''nistsimulation'' or ''nistchaching''.
 
 To execute any of them is necessary to download the [Arduino Time Library](http://playground.arduino.cc/Code/Time).
